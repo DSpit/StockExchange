@@ -9,5 +9,10 @@ package com.dspit.stockExchange.data;
  * @author David Boivin (Spit)
  */
 public class Transaction {
+	
+	
+	public boolean isSuccessful(){
+		return false;	//TODO
+	}
 
 }
