@@ -22,7 +22,7 @@ public class SuccessfulTransactionReport extends ReportWindow {
 // Constructors ------------------------------------------------------------ //
 	
 	public SuccessfulTransactionReport(ArrayList<Transaction> log){
-		super(log, TITLE);
+		super(log, TITLE, true);
 	}
 	
 // Overrides --------------------------------------------------------------- //

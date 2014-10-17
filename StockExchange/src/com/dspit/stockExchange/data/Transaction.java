@@ -3,12 +3,12 @@
 package com.dspit.stockExchange.data;
 
 /**
- * A log entry of what the user has done with different 
+ * A general log entry of what the user has done with different 
  * portfolios.
  *
  * @author David Boivin (Spit)
  */
-public class Transaction {
+public class Transaction implements TransactionInterface{
 	
 	
 	public boolean isSuccessful(){

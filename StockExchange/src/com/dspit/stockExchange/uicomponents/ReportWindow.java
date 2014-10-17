@@ -30,7 +30,7 @@ public abstract class ReportWindow extends JFrame {
 	
 // Constructor ------------------------------------------------------------- //
 	
-	public ReportWindow(ArrayList<Transaction> log, String title){
+	public ReportWindow(ArrayList<Transaction> log, String title, boolean isSuccessful){
 		super(title);
 		
 		mLog = log;
@@ -40,7 +40,7 @@ public abstract class ReportWindow extends JFrame {
 		this.setLocationRelativeTo(null);
 		
 		//build main panel
-		mMainPanel = new ReportPanel();
+		mMainPanel = new ReportPanel(isSuccessful);
 		this.populateReport();
 		
 		//add main panel to frame
