@@ -2,11 +2,14 @@
 
 package com.dspit.stockExchange.mainframe;
 
-import javax.swing.JFrame;
+import java.util.ArrayList;
 
 import com.dspit.stockExchange.data.CompanyList;
-import com.dspit.stockExchange.data.Log;
 import com.dspit.stockExchange.data.PortfolioList;
+import com.dspit.stockExchange.data.Transaction;
+import com.dspit.stockExchange.uicomponents.FailedTransactionReport;
+import com.dspit.stockExchange.uicomponents.ReportWindow;
+import com.dspit.stockExchange.uicomponents.SuccessfulTransactionReport;
 
 /**
  * Main Stock Exchange SubSystem. Runs all GUI and 
@@ -18,13 +21,13 @@ public class MainFrame{
 	
 // Constants --------------------------------------------------------------- //
 	
-	public final long WAIT_TIME = 3600;
+	public final long WAIT_TIME = 3600;	//TODO fine-tune this value
 	
 // Members ----------------------------------------------------------------- //
 	
 	private CompanyList mCompanies;
 	private PortfolioList mPortfolios;
-	private Log mLog;
+	private ArrayList<Transaction> mLog;
 	
 // Constructors ------------------------------------------------------------ //
 	
@@ -36,7 +39,7 @@ public class MainFrame{
 		
 		mCompanies = new CompanyList();
 		mPortfolios = new PortfolioList();
-		mLog = new Log();
+		mLog = new ArrayList<Transaction>();
 	}
 	
 // Public Methods ---------------------------------------------------------- //
@@ -46,19 +49,29 @@ public class MainFrame{
 	 * stock exchange program.
 	 */
 	public void mainWindow(){
-		MainWindow window = new MianWindow(mLog, mPortfolios, mCompanies);
+		MainWindow window = new MainWindow(mLog, mPortfolios, mCompanies);
 	}
 	
 	/**
 	 * Displays the log of all the user's activity during this session
 	 */
 	public void exit(){
-		ReportWindow successfulTrans = new SuccessReportWindow(mLog);
-		this.wait(WAIT_TIME);
+		ReportWindow successfulTrans = new SuccessfulTransactionReport(mLog);
+		try {
+			this.wait(WAIT_TIME);
+		} catch (InterruptedException e) {
+			System.out.println(e);
+			//do nothing
+		}
 		successfulTrans.dispose();
 		
-		ReportWindow failedTrans = new FailedReportWindow(mLog);
-		this.wait(WAIT_TIME);
+		ReportWindow failedTrans = new FailedTransactionReport(mLog);
+		try {
+			this.wait(WAIT_TIME);
+		} catch (InterruptedException e) {
+			System.out.println(e);
+			//do nothing
+		}
 		failedTrans.dispose();
 		
 		/* 			NOTE:					*/
