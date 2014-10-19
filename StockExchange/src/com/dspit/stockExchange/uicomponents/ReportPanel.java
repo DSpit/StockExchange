@@ -51,13 +51,4 @@ public class ReportPanel extends JPanel {
 	public void include(Transaction trans){
 		
 	}
-	
-	public void setEmpty(){
-		
-	}
-	
-	public boolean isEmpty(){
-		return false;
-	}
-
 }

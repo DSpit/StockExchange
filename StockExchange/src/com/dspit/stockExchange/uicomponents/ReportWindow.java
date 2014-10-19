@@ -80,10 +80,6 @@ public abstract class ReportWindow extends JFrame {
 				mMainPanel.include(trans);
 			}
 		}
-		
-		if(mMainPanel.isEmpty()){
-			mMainPanel.setEmpty();
-		}
 	}
 	
 }
