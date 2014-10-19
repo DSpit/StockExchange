@@ -31,13 +31,13 @@ public class SuccessfulTransactionReport extends ReportWindow {
 	 * The transaction is considered valid if the transaction was 
 	 * successful.
 	 * 
-	 * @see Transaction#isSuccessful()
+	 * @see Transaction#isValid()
 	 * @see ReprotWindow#isValid(Transaction)
 	 */
 	@Override
 	protected boolean isValid(Transaction trans) {
 		
-		if(trans.isSuccessful()){
+		if(trans.isValid()){
 			return true;
 		}
 		

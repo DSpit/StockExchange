@@ -20,7 +20,7 @@ public class Transaction implements TransactionInterface{
 		++sTransNumber;
 	}
 	
-	public boolean isSuccessful(){
+	public boolean isValid(){
 		return false;	//TODO
 	}
 

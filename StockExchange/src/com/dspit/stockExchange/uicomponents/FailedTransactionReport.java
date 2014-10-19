@@ -31,13 +31,13 @@ public class FailedTransactionReport extends ReportWindow {
 	 * The transaction is considered valid if the transaction was 
 	 * unsuccessful.
 	 * 
-	 * @see Transaction#isSuccessful()
+	 * @see Transaction#isValid()
 	 * @see ReprotWindow#isValid(Transaction)
 	 */
 	@Override
 	protected boolean isValid(Transaction trans) {
 		
-		if(trans.isSuccessful()){
+		if(trans.isValid()){
 			return false;
 		}
 		
