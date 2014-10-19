@@ -77,7 +77,7 @@ public abstract class ReportWindow extends JFrame {
 		
 		for(Transaction trans : mLog){
 			if(this.isValid(trans)){
-				mMainPanel.include(trans);
+				mMainPanel.add(trans);
 			}
 		}
 	}
