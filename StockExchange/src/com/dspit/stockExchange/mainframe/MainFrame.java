@@ -8,8 +8,9 @@ import com.dspit.stockExchange.data.CompanyList;
 import com.dspit.stockExchange.data.PortfolioList;
 import com.dspit.stockExchange.data.Transaction;
 import com.dspit.stockExchange.uicomponents.FailedTransactionReport;
-import com.dspit.stockExchange.uicomponents.TransactionReport;
+import com.dspit.stockExchange.uicomponents.MainWindow;
 import com.dspit.stockExchange.uicomponents.SuccessfulTransactionReport;
+import com.dspit.stockExchange.uicomponents.TransactionReport;
 
 /**
  * Main Stock Exchange SubSystem. Runs all GUI and 
