@@ -8,8 +8,11 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
+import com.dspit.stockExchange.Exception.NoSharesException;
+import com.dspit.stockExchange.Exception.PriceOutOfRangeException;
+import com.dspit.stockExchange.Exception.QuantityOutOfRangeException;
+import com.dspit.stockExchange.data.SellTransaction;
 import com.dspit.stockExchange.data.Transaction;
 import com.dspit.stockExchange.data.TransactionInterface;
 
@@ -62,7 +65,7 @@ public class ReportPanel extends JPanel {
 		
 		//set the column values of the transactions inside a vector object
 		Vector<String> row = new Vector<String>(6, 1);
-		row.add(0, String.toString(trans.getTransNum()));	//add the Transaction Number
+		row.add(0, String.valueOf(trans.getTransNum()));	//add the Transaction Number
 		row.add(1, trans.getPortfolioName());			//add investor
 		row.add(2, trans.getCompanyName());			//add company
 		
@@ -74,35 +77,36 @@ public class ReportPanel extends JPanel {
 			row.add(3, trans.getTransType());
 			
 			try{							//add the total number of shares
-				row.add(4, String.valueOf(trans.getShareQuantity());
+				row.add(4, String.valueOf(trans.getShareQuantity()));
 				
 				try{						//add the price of the individual share
 					row.add(5, String.valueOf(trans.getUnitPrice()));
-				}catch(QuantityOutOfRangeException e){
+				}catch(PriceOutOfRangeException e){
 					row.add(5, e.MARKER);
 					row.add(6, e.getMessage());
 				}
 				
-			}catch(NoCompanySharesException e){
+			}catch(QuantityOutOfRangeException e){
 				row.add(4, e.MARKER);
 				row.add(5, e.MARKER);
 				row.add(6, e.getMessage());
 			}	
 			
 		}catch(NoSharesException e){
-			row.add(3, TransactionInterface.SELL_TRANSACTION_MARKER);
+			row.add(3, TransactionInterface.SELL_TRANSACTION_NAME);
 			row.add(4, e.MARKER);
-			row.add(5, e.MAKRER);
+			row.add(5, e.MARKER);
 			row.add(6, e.getMessage());
 		}
 		
 		if(mIsSuccessful){
-			row.add(6, String.toString(trans.getTotal()));	//add the total
+			row.add(6, String.valueOf(trans.getTotal()));	//add the total
 			
-			if(trans instanceof BuyTransaction){		//add the profit
+			if(row.get(3) == 				//add the profit
+					TransactionInterface.BUY_TRANSACTION_NAME){
 				row.add(7, BLANK);
 			}else{
-				row.add(7, ((SellTransaction) trans).getProfit());
+				row.add(7, String.valueOf(((SellTransaction) trans).getProfit()));
 			}
 		}
 		
