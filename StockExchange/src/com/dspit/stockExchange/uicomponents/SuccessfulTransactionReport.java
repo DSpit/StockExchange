@@ -13,7 +13,7 @@ import com.dspit.stockExchange.data.Transaction;
  * @author David Boivin (Spit)
  */
 @SuppressWarnings("serial")
-public class SuccessfulTransactionReport extends ReportWindow {
+public class SuccessfulTransactionReport extends TransactionReport {
 	
 // Constants --------------------------------------------------------------- //
 	
@@ -21,6 +21,13 @@ public class SuccessfulTransactionReport extends ReportWindow {
 
 // Constructors ------------------------------------------------------------ //
 	
+	/**
+	 * Basically does exactly what {@link TransactionReport#TransactionReport(ArrayList, String, boolean)}
+	 * does with the the success variable set to true because this is the
+	 * Successful transaction report.
+	 * 
+	 * @param log The list of transactions
+	 */
 	public SuccessfulTransactionReport(ArrayList<Transaction> log){
 		super(log, TITLE, true);
 	}

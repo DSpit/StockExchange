@@ -14,11 +14,8 @@ import com.dspit.stockExchange.data.Transaction;
  * @author David Boivin (Spit)
  */
 @SuppressWarnings("serial")
-public abstract class ReportWindow extends JFrame {
+public abstract class TransactionReport extends JFrame {
 
-// Constants --------------------------------------------------------------- //
-	
-	
 	
 // Members ----------------------------------------------------------------- //
 	
@@ -30,7 +27,16 @@ public abstract class ReportWindow extends JFrame {
 	
 // Constructor ------------------------------------------------------------- //
 	
-	public ReportWindow(ArrayList<Transaction> log, String title, boolean isSuccessful){
+	/**
+	 * Initializes and builds the main frame of the Graphical display
+	 * for the report windows of this System.
+	 * 
+	 * @param log The list of transactions.
+	 * @param title The title of the window.
+	 * @param isSuccessful A variable which dictates whether the Report if for 
+	 * 		successful transactions or failed transaction.
+	 */
+	public TransactionReport(ArrayList<Transaction> log, String title, boolean isSuccessful){
 		super(title);
 		
 		mLog = log;

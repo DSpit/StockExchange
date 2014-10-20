@@ -8,7 +8,7 @@ import com.dspit.stockExchange.data.CompanyList;
 import com.dspit.stockExchange.data.PortfolioList;
 import com.dspit.stockExchange.data.Transaction;
 import com.dspit.stockExchange.uicomponents.FailedTransactionReport;
-import com.dspit.stockExchange.uicomponents.ReportWindow;
+import com.dspit.stockExchange.uicomponents.TransactionReport;
 import com.dspit.stockExchange.uicomponents.SuccessfulTransactionReport;
 
 /**
@@ -56,7 +56,7 @@ public class MainFrame{
 	 * Displays the log of all the user's activity during this session
 	 */
 	public void exit(){
-		ReportWindow successfulTrans = new SuccessfulTransactionReport(mLog);
+		TransactionReport successfulTrans = new SuccessfulTransactionReport(mLog);
 		try {
 			this.wait(WAIT_TIME);
 		} catch (InterruptedException e) {
@@ -65,7 +65,7 @@ public class MainFrame{
 		}
 		successfulTrans.dispose();
 		
-		ReportWindow failedTrans = new FailedTransactionReport(mLog);
+		TransactionReport failedTrans = new FailedTransactionReport(mLog);
 		try {
 			this.wait(WAIT_TIME);
 		} catch (InterruptedException e) {
