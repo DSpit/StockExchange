@@ -55,27 +55,57 @@ public class ReportPanel extends JPanel {
 	
 	public void add(Transaction trans){
 		
-		//set the column values of the transactions inside a vector object
+		//checks if the transactions is in the right report
+		if(mIsSuccessful != trans.isValid()){
+			return;		//abort adding the transaction to the report
+		}
 		
-		Vector<String> row = new Vector<String>();
+		//set the column values of the transactions inside a vector object
+		Vector<String> row = new Vector<String>(6, 1);
 		row.add(0, String.toString(trans.getTransNum()));	//add the Transaction Number
 		row.add(1, trans.getPortfolioName());			//add investor
 		row.add(2, trans.getCompanyName());			//add company
-		row.add(3, trans.getTransType());			//add transaction type (Sell or Buy)
-		row.add(4, String.toString(trans.getNumShares()));	//add the total number of shares
-		row.add(5, String.toString(trans.getUnitPrice()));	//add the price of the individual share
+		
+		/*
+		 * This is just a fancy ass way of either entering the right information depending on 
+		 * if the transaction is valid and what the error cause it to be invalid.
+		 */
+		try{							//add transaction type (Sell or Buy)
+			row.add(3, trans.getTransType());
+			
+			try{							//add the total number of shares
+				row.add(4, String.valueOf(trans.getShareQuantity());
+				
+				try{						//add the price of the individual share
+					row.add(5, String.valueOf(trans.getUnitPrice()));
+				}catch(QuantityOutOfRangeException e){
+					row.add(5, e.MARKER);
+					row.add(6, e.getMessage());
+				}
+				
+			}catch(NoCompanySharesException e){
+				row.add(4, e.MARKER);
+				row.add(5, e.MARKER);
+				row.add(6, e.getMessage());
+			}	
+			
+		}catch(NoSharesException e){
+			row.add(3, TransactionInterface.SELL_TRANSACTION_MARKER);
+			row.add(4, e.MARKER);
+			row.add(5, e.MAKRER);
+			row.add(6, e.getMessage());
+		}
 		
 		if(mIsSuccessful){
-			row.add(6, String.toString(trans.getTotal()));	//add is total
+			row.add(6, String.toString(trans.getTotal()));	//add the total
 			
-			if(trans instanceof BuyTransaction){
+			if(trans instanceof BuyTransaction){		//add the profit
 				row.add(7, BLANK);
 			}else{
-				//TODO figure out how to get the total profit/loss
+				row.add(7, ((SellTransaction) trans).getProfit());
 			}
-		}else{
-			//TODO add Invalid report list
 		}
+		
 		//append row to the table
 		((DefaultTableModel) mTable.getModel()).addRow(row);
 	}
