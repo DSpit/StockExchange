@@ -9,7 +9,8 @@ import com.dspit.stockExchange.Exception.PriceOutOfRangeException;
 import com.dspit.stockExchange.Exception.QuantityOutOfRangeException;
 
 /**
- *
+ * A transaction which represents a buy. 
+ * 
  * @author David Boivin (Spit)
  */
 public class BuyTransaction extends Transaction {
