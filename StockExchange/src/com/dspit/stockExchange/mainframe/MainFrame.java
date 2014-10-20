@@ -50,7 +50,7 @@ public class MainFrame{
 	 * stock exchange program.
 	 */
 	public void mainWindow(){
-		MainWindow window = new MainWindow(mLog, mPortfolios, mCompanies);
+		new MainWindow(mLog, mPortfolios, mCompanies);
 	}
 	
 	/**
