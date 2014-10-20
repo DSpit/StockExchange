@@ -10,4 +10,6 @@ package com.dspit.stockExchange.data;
  */
 public class Portfolio {
 
+	private String mName;
+//	private ArrayList<Transaction> m
 }
