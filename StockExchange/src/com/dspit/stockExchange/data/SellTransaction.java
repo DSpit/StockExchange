@@ -30,6 +30,8 @@ public class SellTransaction extends Transaction {
 	 */
 	public SellTransaction(Portfolio protfolio, Company company, int shares, BigDecimal price) {
 		super(protfolio, company, shares, price);
+		mTransType = SELL_TRANSACTION_NAME;
+		
 		// TODO don't forget to check validity
 	}
 
@@ -47,7 +49,7 @@ public class SellTransaction extends Transaction {
 	 */
 	public String getTransType() throws NoSharesException{
 		// TODO Auto-generated method stub
-		return "";
+		return mTransType;
 	}
 
 	/**
@@ -63,7 +65,7 @@ public class SellTransaction extends Transaction {
 	@Override
 	public int getShareQuantity() throws QuantityOutOfRangeException{
 		// TODO Auto-generated method stub
-		return -1;
+		return shareQuantity;
 	}
 
 	/**
@@ -79,7 +81,7 @@ public class SellTransaction extends Transaction {
 	@Override
 	public BigDecimal getUnitPrice() throws PriceOutOfRangeException{
 		// TODO Auto-generated method stub
-		return null;
+		return sharePrice;
 	}
 	
 	/** 
@@ -111,7 +113,7 @@ public class SellTransaction extends Transaction {
 	 *
 	 * @return The profit (+/-) of this transaction. 
 	 */
-	public int getProfit(){
+	protected int getProfit(){
 		return -1;
 	}
 

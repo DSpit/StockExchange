@@ -14,13 +14,22 @@ import com.dspit.stockExchange.Exception.QuantityOutOfRangeException;
  *
  * @author David Boivin (Spit)
  */
-public abstract class Transaction implements TransactionInterface{
+public abstract class Transaction implements TransactionInterface
+{
 	
 // Static Counter ---------------------------------------------------------- //
 	
 	protected static int sTransNumber = 0;
 	
 // Members ----------------------------------------------------------------- //
+	
+	protected int mTransNumber;
+	protected String mTransType;
+	protected Portfolio mPortfolio;
+	protected Company mCompany;
+	protected int shareQuantity;
+	protected BigDecimal sharePrice;
+	protected BigDecimal mTotal;		 
 	
 // Constructor ------------------------------------------------------------- //
 	
@@ -34,7 +43,14 @@ public abstract class Transaction implements TransactionInterface{
 	 * @param price The price of each individual shares for this transaction.
 	 */
 	public Transaction(Portfolio portfolio, Company company, int shares, BigDecimal price) {
-		//TODO 
+		mPortfolio = portfolio;
+		mCompany = company;
+		shareQuantity = shares;
+		sharePrice = price;
+		mTotal = price.multiply(new BigDecimal(shares));
+		
+		mTransNumber = ++sTransNumber;
+		
 	}
 	
 // Public Methods ---------------------------------------------------------- //
@@ -56,7 +72,7 @@ public abstract class Transaction implements TransactionInterface{
 	 * @return The unique identifier of the instance of this transaction.
 	 */
 	public int getTransNum(){
-		return -1; //TODO
+		return mTransNumber;
 	}
 	
 	/**
@@ -67,7 +83,7 @@ public abstract class Transaction implements TransactionInterface{
 	 * 	transaction.
 	 */
 	public String getPortfolioName(){
-		return ""; //TODO
+		return mPortfolio.getPortfolioName();
 	}
 	
 	/**
