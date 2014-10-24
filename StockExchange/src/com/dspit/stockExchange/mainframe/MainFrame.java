@@ -23,6 +23,8 @@ public class MainFrame{
 // Constants --------------------------------------------------------------- //
 	
 	public final long WAIT_TIME = 3600;	//TODO fine-tune this value
+	private final String[] DEFAULT_COMPANY_NAMES = {"Asus", "Intel", "IBM", "Apple", "Google"};
+	private final String[] DEFAULT_PORTFOLIO_NAMES = {"Ariel", "Matthew", "Marco", "Mary-Jane", "Molly"};
 	
 // Members ----------------------------------------------------------------- //
 	
@@ -38,8 +40,8 @@ public class MainFrame{
 		/* If Saving retrieve is implemented, it goes here 	*/
 		/*							*/					
 		
-		mCompanies = new CompanyList();
-		mPortfolios = new PortfolioList();
+		mCompanies = new CompanyList(DEFAULT_COMPANY_NAMES);
+		mPortfolios = new PortfolioList(DEFAULT_PORTFOLIO_NAMES);
 		mLog = new ArrayList<Transaction>();
 	}
 	
