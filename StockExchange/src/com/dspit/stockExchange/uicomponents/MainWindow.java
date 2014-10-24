@@ -17,6 +17,7 @@ import com.dspit.stockExchange.data.Transaction;
  * 
  * @author David Boivin (dSpit)
  */
+@SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 	
 // Constants --------------------------------------------------------------- //
@@ -42,7 +43,7 @@ public class MainWindow extends JFrame {
 		mPortfolios = portfolios;
 		mCompanies = companies;
 		
-		mMainPanel = this.createSelectionPanel();
+		mMainPanel = new TransactionSelectorPanel(mPortfolios, mCompanies);
 	}
 	
 // Private Methods --------------------------------------------------------- //
@@ -50,11 +51,7 @@ public class MainWindow extends JFrame {
 	private JPanel createSelectionPanel(){
 		
 		JPanel mainPanel = new JPanel();
-		LayoutManager lm = new BoxLayout(mainPanel, BoxLayout.Y_AXIS);
-		
-		mainPanel.add(new PortfolioSelectionPanel(mPortfolios));
-		mainPanel.add(new CompanySelectorPanel(mCompanies));
-		mainPanel.add(controls)
+
 		
 		
 		

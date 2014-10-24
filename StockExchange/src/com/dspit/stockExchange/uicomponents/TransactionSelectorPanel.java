@@ -1,6 +1,8 @@
 package com.dspit.stockExchange.uicomponents;
 
 import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -14,13 +16,17 @@ public class TransactionSelectorPanel extends JPanel {
 	
 	private final String NEXT_BUTTON = "Next";
 	
+	private JPanel
+	
 	public TransactionSelectorPanel(PortfolioList portfolios, CompanyList companies){
 		super();
 		
 		LayoutManager lm = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(lm);
 		
-		this.add(new SelectorPanel(portfolios));
+		mPortfolioPanel = new SelectorPanel(portfolios);
+		
+		this.add(mPortfolioPanel);
 		this.add(new SelectorPanel(companies));
 		this.add(this.getGUIControls());
 	}
@@ -36,6 +42,15 @@ public class TransactionSelectorPanel extends JPanel {
 		
 		
 		return null; //TODO
+	}
+	
+	
+	private class NextListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+		}
 	}
 
 }
