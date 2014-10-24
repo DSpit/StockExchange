@@ -113,7 +113,7 @@ public class SellTransaction extends Transaction {
 	 *
 	 * @return The profit (+/-) of this transaction. 
 	 */
-	protected int getProfit(){
+	public int getProfit(){
 		return -1;
 	}
 
