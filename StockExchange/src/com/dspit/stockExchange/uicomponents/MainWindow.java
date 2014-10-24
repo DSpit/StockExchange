@@ -1,7 +1,9 @@
 package com.dspit.stockExchange.uicomponents;
 
+import java.awt.LayoutManager;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -23,22 +25,40 @@ public class MainWindow extends JFrame {
 	
 // Members ----------------------------------------------------------------- //
 	
-	
+	private ArrayList<Transaction> mLog;
+	private PortfolioList mPortfolios;
+	private CompanyList mCompanies;
 	
 // UI Components ----------------------------------------------------------- //
 	
-	private JPanel mMainPanel;  
+	private JPanel mMainPanel;
 	
 // Constructor ------------------------------------------------------------- //
 	
-	public MainWindow(ArrayList<Transaction> log, PortfolioList protfolios, CompanyList companies){
+	public MainWindow(ArrayList<Transaction> log, PortfolioList portfolios, CompanyList companies){
 		super(TITLE);
+		
+		mLog = log;
+		mPortfolios = portfolios;
+		mCompanies = companies;
 		
 		mMainPanel = this.createSelectionPanel();
 	}
 	
 // Private Methods --------------------------------------------------------- //
 	
-	
+	private JPanel createSelectionPanel(){
+		
+		JPanel mainPanel = new JPanel();
+		LayoutManager lm = new BoxLayout(mainPanel, BoxLayout.Y_AXIS);
+		
+		mainPanel.add(new PortfolioSelectionPanel(mPortfolios));
+		mainPanel.add(new CompanySelectorPanel(mCompanies));
+		mainPanel.add(controls)
+		
+		
+		
+		return mainPanel;
+	}
 	
 }
