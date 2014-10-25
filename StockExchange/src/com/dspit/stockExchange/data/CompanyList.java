@@ -11,12 +11,8 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class CompanyList extends ArrayList<Company> 
 {
-
-	// Members ---------------------------------------------------------------- //
 	
-	private ArrayList<Company> companyArray = new ArrayList<Company>();
-	
-	// Constructors ---------------------------------------------------------------- //
+// Constructors ---------------------------------------------------------------- //
 	
 	/**
 	 * Constructor that creates a specified amount of Company objects with name "Company #"
@@ -29,7 +25,7 @@ public class CompanyList extends ArrayList<Company>
 	{
 		for(int i = 0; i < numberCompanies; i++)
 		{
-			companyArray.add(new Company("Company " + Integer.toString(i + 1)));
+			this.add(new Company("Company " + Integer.toString(i + 1)));
 		}
 	}
 	
@@ -42,7 +38,7 @@ public class CompanyList extends ArrayList<Company>
 	public CompanyList(String[] names)
 	{		
 		for (int i = 0; i < names.length; i++)
-			companyArray.add(new Company(names[i]));
+			this.add(new Company(names[i]));
 	}
 	
 	/**
@@ -53,10 +49,10 @@ public class CompanyList extends ArrayList<Company>
 	 */
 	public CompanyList(String name)
 	{
-		companyArray.add(new Company(name));
+		this.add(new Company(name));
 	}
 	
-	// Methods ---------------------------------------------------------------- //
+// Methods ---------------------------------------------------------------- //
 }
 
 

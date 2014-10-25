@@ -12,11 +12,10 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class PortfolioList extends ArrayList<Portfolio> 
 {
-	// Members ---------------------------------------------------------------- //
+// Members ---------------------------------------------------------------- //
 	
-		private ArrayList<Portfolio> portfolioArray = new ArrayList<Portfolio>();
 		
-	// Constructors ---------------------------------------------------------------- //
+// Constructors ---------------------------------------------------------------- //
 		
 	/**
 	 * Constructor that creates a specified amount of Portfolio objects with name "Portfolio #"
@@ -29,7 +28,7 @@ public class PortfolioList extends ArrayList<Portfolio>
 	{
 		for(int i = 0; i < numberPortfolios; i++)
 		{
-			portfolioArray.add(new Portfolio("Portfolio " + Integer.toString(i + 1)));
+			this.add(new Portfolio("Portfolio " + Integer.toString(i + 1)));
 		}
 	}
 	
@@ -42,7 +41,7 @@ public class PortfolioList extends ArrayList<Portfolio>
 	public PortfolioList(String[] names)
 	{		
 		for (int i = 0; i < names.length; i++)
-			portfolioArray.add(new Portfolio(names[i]));
+			this.add(new Portfolio(names[i]));
 	}
 	
 	/**
@@ -53,7 +52,7 @@ public class PortfolioList extends ArrayList<Portfolio>
 	 */
 	public PortfolioList(String name)
 	{
-		portfolioArray.add(new Portfolio(name));
+		this.add(new Portfolio(name));
 	}
 }
 
