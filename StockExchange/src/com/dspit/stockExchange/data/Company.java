@@ -78,4 +78,16 @@ public class Company
 	{
 		return mCompId;
 	}
+	
+// Overrides --------------------------------------------------------------- //
+	
+	/**
+	 * the String representation of this class.
+	 * 
+	 * @return The name of the company
+	 */
+	@Override
+	public String toString(){
+		return mName;
+	}
 }

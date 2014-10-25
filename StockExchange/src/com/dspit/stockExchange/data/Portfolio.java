@@ -94,6 +94,16 @@ public class Portfolio
 	{
 		return mName;
 	}
+	
+	/**
+	 * Returns the string representation of this class.
+	 * 
+	 * @return The name of the portfolio.
+	 */
+	@Override
+	public String toString(){
+		return mName;
+	}
 }
 
 
