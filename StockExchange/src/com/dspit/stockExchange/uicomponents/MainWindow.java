@@ -99,6 +99,9 @@ public class MainWindow extends JFrame {
 			ArrayList<Company> selectedCompanies = 
 					panel.getSelectedCompanies();
 			
+			System.out.println(selectedPortfolios);
+			System.out.println(selectedCompanies);
+			
 			//checks if the lists are valid e.i. the lists aren't empty
 			if(selectedPortfolios.isEmpty() || selectedCompanies.isEmpty()){
 				panel.displayUserError(USER_ERROR_MESSAGE);
