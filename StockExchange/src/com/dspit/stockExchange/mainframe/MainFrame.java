@@ -34,6 +34,9 @@ public class MainFrame{
 	
 // Constructors ------------------------------------------------------------ //
 	
+	/**
+	 * Default constructor which initializes all the members with proper values.
+	 */
 	public MainFrame(){
 		
 		/*			NOTE:				*/
