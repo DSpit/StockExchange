@@ -51,22 +51,20 @@ public class MainFrame{
 // Public Methods ---------------------------------------------------------- //
 	
 	/**
-	 * Displays a GUI with all the information to start off the investor 
-	 * stock exchange program.
-	 */
-	public void mainWindow(){
-		new MainWindow(mLog, mPortfolios, mCompanies);
-	}
-	
-	/**
 	 * Displays the log of all the user's activity during this session
 	 */
-	public void exit(){
+	public void run(){
+		
+		//Display main window
+		new MainWindow(mLog, mPortfolios, mCompanies);
+		
+		//FIXME main window not displaying companies and portfolios
+		
 		//display successful transactions
 		TransactionReport successfulTrans = new SuccessfulTransactionReport(mLog);
 		
 		//wait for the user to see and understand report
-		try {
+		try {							//FIXME wait time implementation
 			this.wait(WAIT_TIME);
 		} catch (InterruptedException e) {
 			System.out.println(e);
@@ -98,7 +96,6 @@ public class MainFrame{
 		
 		MainFrame exchange = new MainFrame();
 		
-		exchange.mainWindow();
-		exchange.exit();
+		exchange.run();
 	}
 }
