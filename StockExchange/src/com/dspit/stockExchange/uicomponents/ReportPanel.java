@@ -37,6 +37,13 @@ public class ReportPanel extends JPanel {
 	
 // Constructors ------------------------------------------------------------ //
 	
+	/**
+	 * Constructor which builds a table to display to the user all the necessary
+	 * information of the report.
+	 *
+	 * @param isSuccessful <b>true</b> if the panel must display successful 
+	 * reports and <b>false</b> if the panel must display failed reports.
+	 */
 	public ReportPanel(boolean isSuccessful){
 		super(new BorderLayout(PADDING, PADDING));
 		
@@ -56,6 +63,12 @@ public class ReportPanel extends JPanel {
 	
 // Public Methods ---------------------------------------------------------- //
 	
+	/**
+	 * Method which add this {@link Transaction} to the table of 
+	 * transactions held by this panel.
+	 *
+	 * @param trans The {@link Transaction} to add to this panel.
+	 */
 	public void add(Transaction trans){
 		
 		//checks if the transactions is in the right report
@@ -99,6 +112,10 @@ public class ReportPanel extends JPanel {
 			row.add(6, e.getMessage());
 		}
 		
+		/*
+		 * checks if the report is a successful report to as to set the necessary
+		 * values in the table
+		 */
 		if(mIsSuccessful){
 			row.add(6, String.valueOf(trans.getTotal()));	//add the total
 			
