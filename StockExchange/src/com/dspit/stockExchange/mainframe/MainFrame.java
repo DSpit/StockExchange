@@ -62,23 +62,29 @@ public class MainFrame{
 	 * Displays the log of all the user's activity during this session
 	 */
 	public void exit(){
+		//display successful transactions
 		TransactionReport successfulTrans = new SuccessfulTransactionReport(mLog);
-		try {
-			this.wait(WAIT_TIME);
-		} catch (InterruptedException e) {
-			System.out.println(e);
-			//do nothing
-		}
-		successfulTrans.dispose();
 		
-		TransactionReport failedTrans = new FailedTransactionReport(mLog);
+		//wait for the user to see and understand report
 		try {
 			this.wait(WAIT_TIME);
 		} catch (InterruptedException e) {
 			System.out.println(e);
 			//do nothing
 		}
-		failedTrans.dispose();
+		successfulTrans.dispose();	//dispose of the window
+		
+		//display failed transactions
+		TransactionReport failedTrans = new FailedTransactionReport(mLog);
+		
+		//wait for the user to see and understand report
+		try {
+			this.wait(WAIT_TIME);
+		} catch (InterruptedException e) {
+			System.out.println(e);
+			//do nothing
+		}
+		failedTrans.dispose();	//dispose of the window
 		
 		/* 			NOTE:					*/
 		/*  add portfolio & company saving code here if you so wish	*/
