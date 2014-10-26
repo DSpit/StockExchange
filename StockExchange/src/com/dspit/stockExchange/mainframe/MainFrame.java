@@ -10,7 +10,7 @@ import com.dspit.stockExchange.data.Transaction;
 import com.dspit.stockExchange.uicomponents.FailedTransactionReport;
 import com.dspit.stockExchange.uicomponents.MainWindow;
 import com.dspit.stockExchange.uicomponents.SuccessfulTransactionReport;
-import com.dspit.stockExchange.uicomponents.TransactionReport;
+import com.dspit.stockExchange.uicomponents.AbsTransactionReport;
 
 /**
  * Main Stock Exchange SubSystem. Runs all GUI and 
@@ -61,7 +61,7 @@ public class MainFrame{
 		//FIXME main window not displaying companies and portfolios
 		
 		//display successful transactions
-		TransactionReport successfulTrans = new SuccessfulTransactionReport(mLog);
+		AbsTransactionReport successfulTrans = new SuccessfulTransactionReport(mLog);
 		
 		//wait for the user to see and understand report
 		try {							//FIXME wait time implementation
@@ -73,7 +73,7 @@ public class MainFrame{
 		successfulTrans.dispose();	//dispose of the window
 		
 		//display failed transactions
-		TransactionReport failedTrans = new FailedTransactionReport(mLog);
+		AbsTransactionReport failedTrans = new FailedTransactionReport(mLog);
 		
 		//wait for the user to see and understand report
 		try {

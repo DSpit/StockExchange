@@ -14,7 +14,7 @@ import com.dspit.stockExchange.data.Transaction;
  * @author David Boivin (Spit)
  */
 @SuppressWarnings("serial")
-public abstract class TransactionReport extends JFrame {
+public abstract class AbsTransactionReport extends JFrame {
 
 	
 // Members ----------------------------------------------------------------- //
@@ -36,7 +36,7 @@ public abstract class TransactionReport extends JFrame {
 	 * @param isSuccessful A variable which dictates whether the Report if for 
 	 * 		successful transactions or failed transaction.
 	 */
-	public TransactionReport(ArrayList<Transaction> log, String title, boolean isSuccessful){
+	public AbsTransactionReport(ArrayList<Transaction> log, String title, boolean isSuccessful){
 		super(title);
 		
 		mLog = log;

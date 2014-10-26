@@ -30,10 +30,13 @@ public class TransactionSelectorPanel extends JPanel {
 	
 	private final String NEXT_BUTTON = "Next";
 	
-// GUI COmponents ---------------------------------------------------------- //
+// Members ----------------------------------------------------------------- //
 	
 	private SelectorPanel<Portfolio> mPortfoliosPanel;
 	private SelectorPanel<Company> mCompaniesPanel;
+	
+// GUI COmponents ---------------------------------------------------------- //
+	
 	private JButton mControlButton;
 	private JLabel mErrorMessage;
 	
