@@ -58,8 +58,6 @@ public class MainFrame{
 		//Display main window
 		new MainWindow(mLog, mPortfolios, mCompanies);
 		
-		//FIXME main window not displaying companies and portfolios
-		
 		//display successful transactions
 		AbsTransactionReport successfulTrans = new SuccessfulTransactionReport(mLog);
 		
