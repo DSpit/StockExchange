@@ -104,22 +104,29 @@ public class MainWindow extends JFrame {
 			
 			//checks if the lists are valid e.i. the lists aren't empty
 			if(selectedPortfolios.isEmpty() || selectedCompanies.isEmpty()){
-				panel.displayUserError(USER_ERROR_MESSAGE);
+				panel.getControlPanel().setErrorMessage(USER_ERROR_MESSAGE);
 				return;
 			}else{
-				panel.removeUserError();
+				panel.getControlPanel().removeErrorMessage();
 			}
 			
 			//change the panel to the next one
 			mMainPanel.removeAll();
-			mMainPanel.add(new TransactionInputPanel(selectedPortfolios, selectedCompanies, mLog));
+			mMainPanel.add(new TransactionInputPanel(selectedPortfolios, selectedCompanies, mLog, new CloseListener()));
 			
 			//repaints the main panel to its new form
 			mMainPanel.revalidate();
 			mMainPanel.repaint();
 			
 		}
+	}
+	
+	private class CloseListener implements ActionListener{
 		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//TODO 
+		}
 		
 	}
 }

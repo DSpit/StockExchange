@@ -1,15 +1,9 @@
 package com.dspit.stockExchange.uicomponents;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.LayoutManager;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.dspit.stockExchange.data.Company;
@@ -26,9 +20,6 @@ import com.dspit.stockExchange.data.PortfolioList;
 @SuppressWarnings("serial") 
 public class TransactionSelectorPanel extends JPanel {
 	
-// Constants --------------------------------------------------------------- //
-	
-	private final String NEXT_BUTTON = "Next";
 	
 // Members ----------------------------------------------------------------- //
 	
@@ -37,8 +28,7 @@ public class TransactionSelectorPanel extends JPanel {
 	
 // GUI COmponents ---------------------------------------------------------- //
 	
-	private JButton mControlButton;
-	private JLabel mErrorMessage;
+	private ControlPanel mControlPanel;
 	
 // Constructors ------------------------------------------------------------ //
 	
@@ -57,17 +47,9 @@ public class TransactionSelectorPanel extends JPanel {
 		selectorContainer.add(mPortfoliosPanel);
 		selectorContainer.add(mCompaniesPanel);
 		
-		//initialize the control button
-		mControlButton = new JButton(NEXT_BUTTON);
-		mControlButton.addActionListener(controlListener);
-		
-		//initialize the error label
-		mErrorMessage = new JLabel("");
-		mErrorMessage.setFont(new Font(null, Font.PLAIN, 12));
-		mErrorMessage.setForeground(Color.RED);
 		
 		this.add(selectorContainer);
-		this.add(this.setupGUIControls());
+		this.add(mControlPanel = new ControlPanel(ControlPanel.CONTROL_BUTTON_NEXT, controlListener));
 		
 	}
 	
@@ -92,42 +74,12 @@ public class TransactionSelectorPanel extends JPanel {
 	}
 	
 	/**
-	 * A method which sets an error for the user to see.
-	 *
-	 * @param message Error Message to display the user
+	 * Method used for easy access to control panel
+	 * 
+	 * @return The control panel of this panel.
 	 */
-	public void displayUserError(String message){
-		mErrorMessage.setText(message);
-	}
-	
-	/**
-	 * Method which removes all text from the error message.
-	 */
-	public void removeUserError(){
-		mErrorMessage.setText("");
-	}
-	
-// Private Methods --------------------------------------------------------- //
-	
-	/**
-	 * Method which is simply for properly setting up the control panel area
-	 * of this panel
-	 *
-	 * @return A {@JPanel} which contains all the controls for this panel.
-	 */
-	private JPanel setupGUIControls(){
-		
-		//basic panel set up
-		JPanel controlPanel = new JPanel();
-		LayoutManager lm = new BoxLayout(controlPanel, BoxLayout.Y_AXIS);
-		controlPanel.setLayout(lm);
-		controlPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		
-		//add components to panel
-		controlPanel.add(mErrorMessage);
-		controlPanel.add(mControlButton);
-		
-		return controlPanel;
+	public ControlPanel getControlPanel(){
+		return mControlPanel;
 	}
 
 }
