@@ -5,6 +5,7 @@ package com.dspit.stockExchange.data;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import com.dspit.stockExchange.Exception.NoSharesException;
 import com.dspit.stockExchange.Exception.QuantityOutOfRangeException;
 
 /**
@@ -101,7 +102,37 @@ final public class Portfolio
 		int total = 0;
 		
 		for(Transaction t : mPortfolio){
-			if(t.isValid() && t.getCompanyName().equals(company.getName())){
+
+
+			if(t.getCompanyName().equals(company.getName())){
+				if(t instanceof BuyTransaction){
+					try {
+						total += t.getShareQuantity();
+					} catch (QuantityOutOfRangeException e) {
+						//should not happen (checked validity)
+					}
+				}else{
+					try {
+						total -= t.getShareQuantity();
+					} catch (QuantityOutOfRangeException e) {
+						//should not happen (checked validity)
+					}
+				}
+			}
+		}
+		
+		return total;
+	}
+	public int getTotalShares(Company company, Transaction trans){
+		int total = 0;
+		
+		for(Transaction t : mPortfolio){
+			
+			if(trans.equals(t)){
+				break;
+			}
+
+			if(t.getCompanyName().equals(company.getName())){
 				if(t instanceof BuyTransaction){
 					try {
 						total += t.getShareQuantity();
@@ -129,19 +160,28 @@ final public class Portfolio
 	 * 
 	 * @return The total cost of all the shares of one company or -1 if none is found
 	 */
-	public BigDecimal getTotalCost(Company company){
+	public BigDecimal getTotalCost(Company company, Transaction trans){
 		BigDecimal total = new BigDecimal(0);
 		
 		for(Transaction t : mPortfolio){
-			if(t.isValid() && t.getCompanyName().equals(company.getName())){
-				if(t instanceof BuyTransaction){
-					total.add(t.getTotal());
-				}else{
-					total.subtract(t.getTotal());
+			if(trans.equals(t)){
+				break;
+			}
+			
+			if(t.getCompanyName().equals(company.getName())){
+				try {
+					if(t.getTransType().equals(TransactionInterface.BUY_TRANSACTION_NAME)){
+						total = total.add(t.getTotal());
+					}else{
+						total = total.subtract(t.getTotal());
+					}
+				} catch (NoSharesException e) {
+					//shouldn't get here
+					e.printStackTrace();
 				}
 			}
 		}
-		
+
 		return total;
 	}
 	

@@ -194,7 +194,6 @@ public class TransactionBuilder {
 	public Transaction createTransaction() throws NullPointerException{
 		
 		if(this.checkDefaultValues()){
-			System.out.println(mTransType.equals(TransactionInterface.BUY_TRANSACTION_NAME));
 			return (mTransType.equals(TransactionInterface.BUY_TRANSACTION_NAME))?
 					new BuyTransaction(mPortfolio, mCompany, shareQuantity, sharePrice):
 					new SellTransaction(mPortfolio, mCompany, sharePrice);
@@ -228,11 +227,10 @@ public class TransactionBuilder {
 		if(mCompany == DEFAULT_COMPANY_VALUE){
 			return false;
 		}
-		
+			
 		//check the quantity
 		if(mTransType.equals(TransactionInterface.BUY_TRANSACTION_NAME) &&
 				shareQuantity == DEFAULT_INT_VALUE){
-			System.out.println("BUY and is default");
 			return false;			
 		}
 		

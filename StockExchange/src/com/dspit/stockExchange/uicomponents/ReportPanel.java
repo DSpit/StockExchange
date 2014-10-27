@@ -92,6 +92,7 @@ public class ReportPanel extends JPanel {
 				
 				try{						//add the price of the individual share
 					row.add(5, String.valueOf(trans.getUnitPrice()));
+					
 				}catch(PriceOutOfRangeException e){
 					row.add(5, e.MARKER);
 					row.add(6, e.getMessage());
@@ -117,8 +118,7 @@ public class ReportPanel extends JPanel {
 		if(mIsSuccessful){
 			row.add(6, String.valueOf(trans.getTotal()));	//add the total
 			
-			if(row.get(3) == 				//add the profit
-					TransactionInterface.BUY_TRANSACTION_NAME){
+			if(row.get(3).equals(TransactionInterface.BUY_TRANSACTION_NAME)){
 				row.add(7, BLANK);
 			}else{
 				try{

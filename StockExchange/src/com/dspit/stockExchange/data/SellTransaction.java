@@ -30,6 +30,8 @@ public final class SellTransaction extends Transaction {
 	 */
 	public SellTransaction(Portfolio portfolio, Company company, BigDecimal price) {
 		super(portfolio, company, portfolio.getTotalShares(company), price);
+		
+		
 		mTransType = SELL_TRANSACTION_NAME;
 		
 	}
@@ -66,9 +68,6 @@ public final class SellTransaction extends Transaction {
 	@Override
 	public int getShareQuantity() throws QuantityOutOfRangeException 
 	{
-		if(shareQuantity < 10 || shareQuantity > 100)
-			throw new QuantityOutOfRangeException();
-		else
 			return shareQuantity;
 	}
 
@@ -111,12 +110,14 @@ public final class SellTransaction extends Transaction {
 	 */
 	@Override
 	protected boolean checkValid() {
-		if(shareQuantity < 10 || shareQuantity > 100)
+		
+		if(mPortfolio.getTotalShares(mCompany, this) <= 0){
 			return false;
-		else if(sharePrice.compareTo(minSharePrice) == -1 || 
-				sharePrice.compareTo(maxSharePrice) == 1)
+		}else if(sharePrice.compareTo(minSharePrice) == -1 || 
+				sharePrice.compareTo(maxSharePrice) == 1){
+			System.out.println("Price porblem");
 			return false;
-		else
+		}else
 			return true;
 	}
 // Public Methods ---------------------------------------------------------- //
@@ -129,7 +130,7 @@ public final class SellTransaction extends Transaction {
 	 */
 	public BigDecimal getProfit() throws NoSharesException{
 		
-		BigDecimal totalCost = mPortfolio.getTotalCost(mCompany);
+		BigDecimal totalCost = mPortfolio.getTotalCost(mCompany, this);
 		
 		if(totalCost.doubleValue() > 0){
 			return totalCost.subtract(sharePrice.multiply(new BigDecimal(shareQuantity)));
