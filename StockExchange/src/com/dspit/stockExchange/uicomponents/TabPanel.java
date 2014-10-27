@@ -398,7 +398,7 @@ public class TabPanel extends JPanel {
 				
 				/**
 				 * Listener for the toggle button. Which will enable or disable the
-				 * quantity field, based on if it is Selling or buying
+				 * quantity field, based on if it is Selling or buying.
 				 *
 				 * @author David Boivin (Spit)
 				 */
@@ -406,10 +406,20 @@ public class TabPanel extends JPanel {
 					
 					private JTextField mQuantityInput; 
 					
+					/**
+					 * Constructor which input interface for quantity to 
+					 * a member variable.
+					 *
+					 * @param quantityInput The quantity input interface.
+					 */
 					public ToggleListener(JTextField quantityInput){
 						mQuantityInput = quantityInput;
 					}
-
+					
+					/**
+					 * Switches the text on the ToggleButton and sets the quantity
+					 * input interface enabled or disables accordingly.
+					 */
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JToggleButton b = (JToggleButton) e.getSource();
