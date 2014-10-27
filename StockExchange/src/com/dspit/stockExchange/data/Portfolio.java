@@ -14,10 +14,13 @@ import java.util.ArrayList;
 final public class Portfolio 
 {
 
-	private String mName;
-	private ArrayList<Transaction> mPortfolio = new ArrayList<Transaction>();
-//	private BigDecimal mTotal = new BigDecimal(0);
+	private String mName = null;
+	protected ArrayList<Transaction> mPortfolio = new ArrayList<Transaction>();
 	
+	protected int reportIterator = 0;
+
+//	private BigDecimal mTotal = new BigDecimal(0);
+		
 	// Constructors ------------------------------------------------------------ //
 	
 	/**
@@ -63,27 +66,53 @@ final public class Portfolio
 		mPortfolio.add(trans);
 	}
 	
+	protected void add(Transaction trans, int index)
+	{
+		mPortfolio.add(index, trans);
+	}
+	
 	
 //	QUESTION : This method assumes that SellTransactions are not actually added to a portfolio,
 //			and that their purpose is solely to "sell" a corresponding stock. Maybe its better
 //			to actually add the SellTransaction to the portfolio? 
 	/**
-	 * Sell Method. Returns true and removes corresponding BuyTransaction
+	 * Sell Method. Returns true and adds SellTransaction portfolio if corresponding BuyTransaction
+	 * was found
 	 * @param sTrans : The sell transaction
 	 * @return : boolean (true if company stock to be sold was found in portfolio)
 	 */
 	protected boolean sell(SellTransaction sTrans)
-	{	
+	{
+		for(int i = 0; i < mPortfolio.size(); i++)
+			{
+				if((mPortfolio.get(i).mCompany.getCompanyId() == sTrans.mCompany.getCompanyId())
+						&& (mPortfolio.get(i) instanceof BuyTransaction))
+				{
+					add(sTrans, i);
+					return true;
+				}
+			}
+		return false;
+	}
+	
+	/**
+	 * Method that searches if a portfolio contains company stocks pertaining to the particular
+	 * SellTransaction. Returns index of transaction if found and -1 if not found.
+	 * 
+	 * @param sTrans : The SellTransaction argument
+	 * @return : index of Transaction object in portfolio or -1 if none is found
+	 */
+	protected int search(SellTransaction sTrans)
+	{
 		for(int i = 0; i < mPortfolio.size(); i++)
 		{
 			if((mPortfolio.get(i).mCompany.getCompanyId() == sTrans.mCompany.getCompanyId())
 					&& (mPortfolio.get(i) instanceof BuyTransaction))
 			{
-				mPortfolio.remove(i);
-				return true;
+				return i;
 			}
 		}
-		return false;
+		return -1;
 	}
 
 	/**
@@ -105,24 +134,3 @@ final public class Portfolio
 		return mName;
 	}
 }
-
-
-//public void setPortfolioTotal()				Define what a profile's total is.
-//{
-//	for (Transaction trans : mPortfolio)
-//	{
-//		if(trans instanceof BuyTransaction)
-//			mTotal = mTotal.add(trans.getUnitPrice());
-//		
-//		else
-//			mTotal = mTotal
-//		
-//	}
-//}
-
-//public void printPortfolio()
-//{	
-//	System.out.println("\n" +mName + "'s Portfolio :");
-//	for (Transaction trans : mPortfolio) 
-//		System.out.println(trans.print());
-//}
