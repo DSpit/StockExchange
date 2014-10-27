@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,6 +16,7 @@ import com.dspit.stockExchange.data.CompanyList;
 import com.dspit.stockExchange.data.Portfolio;
 import com.dspit.stockExchange.data.PortfolioList;
 import com.dspit.stockExchange.data.Transaction;
+import com.dspit.stockExchange.data.TransactionBuilder;
 
 /**
  * The main Graphical interface of this system. This is where
@@ -105,6 +109,7 @@ public class MainWindow extends JFrame {
 			//checks if the lists are valid e.i. the lists aren't empty
 			if(selectedPortfolios.isEmpty() || selectedCompanies.isEmpty()){
 				panel.getControlPanel().setErrorMessage(USER_ERROR_MESSAGE);
+				mMainPanel = (JPanel) panel;
 				return;
 			}else{
 				panel.getControlPanel().removeErrorMessage();
@@ -121,11 +126,95 @@ public class MainWindow extends JFrame {
 		}
 	}
 	
+	/**
+	 * Listener which dictates what happens when the user is done with the TransactionInputPanel
+	 *
+	 * @author David Boivin (Spit)
+	 */
 	private class CloseListener implements ActionListener{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//TODO 
+			
+			//makes life easier
+			TransactionInputPanel panel = (TransactionInputPanel) mMainPanel.getComponent(0);
+			
+			HashMap<Portfolio, ArrayList<TransactionBuilder>> pendingTransactions;
+			
+			try{
+				pendingTransactions = panel.getInputValues();
+				
+				//iterate through the portfolios
+				for(Portfolio key : pendingTransactions.keySet()){
+					//iterate through each pending transaction for the portfolio
+					for(TransactionBuilder builder : pendingTransactions.get(key)){
+						Transaction t = builder.createTransaction();
+						
+						//add to the internal log and the portfolio log
+						mLog.add(t);
+						key.add(t);
+					}
+				}
+				
+				//dispose of the transaction panel
+				dispose();
+				
+				//set start report sequence
+				
+				//display successful transactions
+				AbsTransactionReport successfulTrans = new SuccessfulTransactionReport(mLog);
+				
+				Timer t = new Timer(); 
+				
+				t.schedule(new ReportTask(successfulTrans),3000);
+				
+				
+				/* 			NOTE:					*/
+				/*  add portfolio & company saving code here if you so wish	*/
+				/*								*/
+				
+			}catch(IllegalArgumentException ex){
+				panel.getControlPanel().setErrorMessage(ex.getMessage());
+			}
+		}
+		
+		private class ReportTask extends TimerTask{
+			private AbsTransactionReport mSuccessTrans;
+			
+			public ReportTask(AbsTransactionReport successfulTrans){
+				mSuccessTrans = successfulTrans;
+			}
+			@Override
+			public void run() {
+				mSuccessTrans.dispose();	//dispose of the window
+				
+				//display failed transactions
+				 AbsTransactionReport failedTrans = new FailedTransactionReport(mLog);
+				 
+				 Timer t = new Timer();
+				 
+				 t.schedule(new CloseTask(failedTrans), 3000);
+				 
+				 this.cancel();
+				 
+				 
+			}
+			
+			private class CloseTask extends TimerTask{
+				private AbsTransactionReport mFailedTrans;
+				
+				public CloseTask(AbsTransactionReport failedTrans){
+					mFailedTrans = failedTrans;
+				}
+
+				@Override
+				public void run() {
+					mFailedTrans.dispose();
+					
+					this.cancel();
+				}
+				
+			}
 		}
 		
 	}

@@ -15,7 +15,7 @@ import com.dspit.stockExchange.Exception.QuantityOutOfRangeException;
  *
  * @author David Boivin (Spit)
  */
-public class SellTransaction extends Transaction {
+public final class SellTransaction extends Transaction {
 
 // Constructor ------------------------------------------------------------- //
 	
@@ -28,8 +28,8 @@ public class SellTransaction extends Transaction {
 	 * @param shares The number of shares which is either bought or sold in this transaction.
 	 * @param price The price of each individual shares for this transaction.
 	 */
-	public SellTransaction(Portfolio portfolio, Company company, int shares, BigDecimal price) {
-		super(portfolio, company, shares, price);
+	public SellTransaction(Portfolio portfolio, Company company, BigDecimal price) {
+		super(portfolio, company, portfolio.getTotalShares(company), price);
 		mTransType = SELL_TRANSACTION_NAME;
 		
 	}

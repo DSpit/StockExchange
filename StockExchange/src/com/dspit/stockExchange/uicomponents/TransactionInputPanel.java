@@ -21,7 +21,7 @@ import com.dspit.stockExchange.data.TransactionBuilder;
  * @author David Boivin (Spit)
  */
 @SuppressWarnings("serial")
-public class TransactionInputPanel extends JPanel {
+public class TransactionInputPanel extends JPanel{
 
 	
 // Members ----------------------------------------------------------------- //
@@ -31,6 +31,7 @@ public class TransactionInputPanel extends JPanel {
 // UI Components ----------------------------------------------------------- //
 	
 	private TabPanel mTPanel;	//almost called this TPain xP
+	private ControlPanel mControlPanel;
 	
 // Constructor ------------------------------------------------------------- //
 
@@ -51,16 +52,25 @@ public class TransactionInputPanel extends JPanel {
 		//set the layout to this panel
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		TabPanel mTPanel = new TabPanel(selectedPortfolios, selectedCompanies);
+		mTPanel = new TabPanel(selectedPortfolios, selectedCompanies);
+		mControlPanel = new ControlPanel(ControlPanel.CONTROL_BUTTON_DONE, controlListener);
 		
 		this.add(mTPanel);
-		this.add(new ControlPanel(ControlPanel.CONTROL_BUTTON_DONE, controlListener));
+		this.add(mControlPanel);
 	}
 	
 // Public Methods ---------------------------------------------------------- //
 	
-	public HashMap<Portfolio, ArrayList<TransactionBuilder>> getInputValues(){
-		return mTPanel.getValues();
+	public HashMap<Portfolio, ArrayList<TransactionBuilder>> getInputValues() throws IllegalArgumentException{
+		try{
+			return mTPanel.getValues();
+		}catch(IllegalArgumentException e){
+			throw e;
+		}
+	}
+	
+	public ControlPanel getControlPanel(){
+		return mControlPanel;
 	}
 
 

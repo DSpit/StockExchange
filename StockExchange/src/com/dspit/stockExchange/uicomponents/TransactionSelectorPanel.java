@@ -18,7 +18,7 @@ import com.dspit.stockExchange.data.PortfolioList;
  * @author David Boivin (Spit)
  */
 @SuppressWarnings("serial") 
-public class TransactionSelectorPanel extends JPanel {
+public class TransactionSelectorPanel extends JPanel{
 	
 	
 // Members ----------------------------------------------------------------- //

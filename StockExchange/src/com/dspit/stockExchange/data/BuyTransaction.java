@@ -13,7 +13,7 @@ import com.dspit.stockExchange.Exception.QuantityOutOfRangeException;
  * 
  * @author David Boivin (Spit)
  */
-public class BuyTransaction extends Transaction {
+public final class BuyTransaction extends Transaction {
 
 	
 	// Constructors ------------------------------------------------------------ //
@@ -30,7 +30,6 @@ public class BuyTransaction extends Transaction {
 		public BuyTransaction(Portfolio portfolio, Company company, int shares, BigDecimal price) {
 			super(portfolio, company, shares, price);
 			mTransType = BUY_TRANSACTION_NAME;
-			// TODO don't forget to check validity
 		}
 
 	// Override ---------------------------------------------------------------- //
@@ -47,7 +46,6 @@ public class BuyTransaction extends Transaction {
 		 */
 		@Override
 		public String getTransType() throws NoSharesException {
-			// TODO Auto-generated method stub
 			if(shareQuantity == 0)
 				throw new NoSharesException();
 			else
@@ -91,7 +89,6 @@ public class BuyTransaction extends Transaction {
 			
 			else
 				return sharePrice;
-			// TODO Auto-generated method stub
 		}
 
 		/** 
@@ -101,7 +98,7 @@ public class BuyTransaction extends Transaction {
 		 */
 		@Override
 		public BigDecimal getTotal() {
-			// TODO Auto-generated method stub
+
 			mTotal = sharePrice.multiply(new BigDecimal(shareQuantity));
 			return mTotal;
 		}

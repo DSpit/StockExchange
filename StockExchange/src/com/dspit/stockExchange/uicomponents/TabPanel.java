@@ -74,8 +74,12 @@ public class TabPanel extends JPanel {
 	 * @return A HashMap of portfolios attached to a list of vectors
 	 * 	which contain the information needed to create a transaction.
 	 */
-	public HashMap<Portfolio, ArrayList<TransactionBuilder>> getValues() {
-		return mEditPanel.getAllValues();
+	public HashMap<Portfolio, ArrayList<TransactionBuilder>> getValues() throws IllegalArgumentException{
+		try{
+			return mEditPanel.getAllValues();
+		}catch(IllegalArgumentException e){
+			throw e;
+		}
 	}
 	
 // Private Inner Classes --------------------------------------------------- //
@@ -227,7 +231,7 @@ public class TabPanel extends JPanel {
 		 *
 		 * @return The values the user has entered.
 		 */
-		public HashMap<Portfolio, ArrayList<TransactionBuilder>> getAllValues(){
+		public HashMap<Portfolio, ArrayList<TransactionBuilder>> getAllValues() throws IllegalArgumentException{
 			HashMap<Portfolio, ArrayList<TransactionBuilder>> output = new HashMap<Portfolio, ArrayList<TransactionBuilder>>();
 			
 			//creates a container list for all the portfolio panels
@@ -237,11 +241,17 @@ public class TabPanel extends JPanel {
 			for(int i = 0; i < subPanelList.length; ++i){
 				OptionPanel panel = (OptionPanel)subPanelList[i];
 				
-				//gets the transaction information supplied by this panel 
-				ArrayList<TransactionBuilder> v = panel.getValues();
 				
-				//adds information to the retrieved information
-				output.put(panel.getPortfolio(), v);
+				//gets the transaction information supplied by this panel 
+				try{
+					ArrayList<TransactionBuilder> v = panel.getValues();
+					
+					//adds information to the retrieved information
+					output.put(panel.getPortfolio(), v);
+					
+				}catch(IllegalArgumentException e){
+					throw e;
+				}
 			}
 			
 			//returns this new set of information
@@ -301,8 +311,11 @@ public class TabPanel extends JPanel {
 			 * this panel.
 			 *
 			 * @return The input values.
+			 * 
+			 * @throws IllgealArgumentException if the builder decides that the values are
+			 * not considered valid.
 			 */
-			public ArrayList<TransactionBuilder> getValues(){
+			public ArrayList<TransactionBuilder> getValues() throws IllegalArgumentException{
 				//return list
 				ArrayList<TransactionBuilder> list = new ArrayList<TransactionBuilder>();
 				
@@ -311,7 +324,11 @@ public class TabPanel extends JPanel {
 					TransactionBuilder builder = new TransactionBuilder();
 					builder.setPortrfolio(mPortfolio);
 					
-					panel.getInputValues(builder);
+					try{
+						panel.getInputValues(builder);
+					}catch(IllegalArgumentException e){
+						throw new IllegalArgumentException(e.getMessage() + " in " + mPortfolio.getName());
+					}
 					
 					list.add(builder);
 				}

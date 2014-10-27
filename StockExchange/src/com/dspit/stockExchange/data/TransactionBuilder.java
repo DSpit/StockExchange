@@ -197,7 +197,7 @@ public class TransactionBuilder {
 			
 			return (mTransType.equals(TransactionInterface.BUY_TRANSACTION_NAME))?
 					new BuyTransaction(mPortfolio, mCompany, shareQuantity, sharePrice):
-					new SellTransaction(mPortfolio, mCompany, shareQuantity, sharePrice);
+					new SellTransaction(mPortfolio, mCompany, sharePrice);
 		}else{
 			throw new NullPointerException();
 		}

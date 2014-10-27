@@ -5,6 +5,8 @@ package com.dspit.stockExchange.data;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import com.dspit.stockExchange.Exception.QuantityOutOfRangeException;
+
 /**
  * A portfolio for each investor the user is managing. Contains all
  * data pertinent to a single investor.
@@ -61,12 +63,12 @@ final public class Portfolio
 	 * 
 	 * @param trans : Transaction object to be added to the portfolio
 	 */
-	protected void add(Transaction trans)
+	public void add(Transaction trans)
 	{
 		mPortfolio.add(trans);
 	}
 	
-	protected void add(Transaction trans, int index)
+	public void add(Transaction trans, int index)
 	{
 		mPortfolio.add(index, trans);
 	}
@@ -95,25 +97,29 @@ final public class Portfolio
 		return false;
 	}
 	
-//	/**
-//	 * Method that searches if a portfolio contains company stocks pertaining to the particular
-//	 * SellTransaction. Returns index of transaction if found and -1 if not found.
-//	 * 
-//	 * @param sTrans : The SellTransaction argument
-//	 * @return : index of Transaction object in portfolio or -1 if none is found
-//	 */
-//	protected int search(SellTransaction sTrans)
-//	{
-//		for(int i = 0; i < mPortfolio.size(); i++)
-//		{
-//			if((mPortfolio.get(i).mCompany.getCompanyId() == sTrans.mCompany.getCompanyId())
-//					&& (mPortfolio.get(i) instanceof BuyTransaction))
-//			{
-//				return i;
-//			}
-//		}
-//		return -1;
-//	}
+	public int getTotalShares(Company company){
+		int total = 0;
+		
+		for(Transaction t : mPortfolio){
+			if(t.isValid() && t.getCompanyName().equals(company.getName())){
+				if(t instanceof BuyTransaction){
+					try {
+						total += t.getShareQuantity();
+					} catch (QuantityOutOfRangeException e) {
+						//should not happen (checked validity)
+					}
+				}else{
+					try {
+						total -= t.getShareQuantity();
+					} catch (QuantityOutOfRangeException e) {
+						//should not happen (checked validity)
+					}
+				}
+			}
+		}
+		
+		return total;
+	}
 	
 	/**
 	 * Method that gets the total cost of all the shares owned by this portfolio
@@ -128,7 +134,11 @@ final public class Portfolio
 		
 		for(Transaction t : mPortfolio){
 			if(t.isValid() && t.getCompanyName().equals(company.getName())){
-				total.add(t.getTotal());
+				if(t instanceof BuyTransaction){
+					total.add(t.getTotal());
+				}else{
+					total.subtract(t.getTotal());
+				}
 			}
 		}
 		
