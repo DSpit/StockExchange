@@ -11,10 +11,10 @@ import java.util.ArrayList;
  *	
  * @author David Boivin (Spit)
  */
-public class Portfolio 
+final public class Portfolio 
 {
 
-	private String mName = null;
+	private String mName;
 	private ArrayList<Transaction> mPortfolio = new ArrayList<Transaction>();
 //	private BigDecimal mTotal = new BigDecimal(0);
 	
@@ -88,9 +88,9 @@ public class Portfolio
 
 	/**
 	 * Returns portfolio name
-	 * @return : mName
+	 * @return mName
 	 */
-	protected String getPortfolioName()
+	public String getName()
 	{
 		return mName;
 	}

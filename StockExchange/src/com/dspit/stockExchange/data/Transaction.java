@@ -83,7 +83,7 @@ public abstract class Transaction implements TransactionInterface
 	 * 	transaction.
 	 */
 	public String getPortfolioName(){
-		return mPortfolio.getPortfolioName();
+		return mPortfolio.getName();
 	}
 	
 	/**

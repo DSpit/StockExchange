@@ -59,7 +59,7 @@ public class TransactionInputPanel extends JPanel {
 	
 // Public Methods ---------------------------------------------------------- //
 	
-	public HashMap<Portfolio, Vector<String>> getInputValues(){
+	public HashMap<Portfolio, ArrayList<Vector<String>>> getInputValues(){
 		return mTPanel.getValues();
 	}
 

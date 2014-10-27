@@ -55,7 +55,7 @@ public class Company
 	{
 		if(mCompId == comp.getCompanyId())
 			return true;
-		else if(mName.equalsIgnoreCase(comp.getCompanyName()))
+		else if(mName.equalsIgnoreCase(comp.getName()))
 			return true;
 		else
 			return false;
@@ -65,7 +65,7 @@ public class Company
 	 * Method returning Company name
 	 * @return : Company name
 	 */
-	protected String getCompanyName()
+	public String getName()
 	{
 		return mName;
 	}
