@@ -103,9 +103,6 @@ public class MainWindow extends JFrame {
 			ArrayList<Company> selectedCompanies = 
 					panel.getSelectedCompanies();
 			
-			System.out.println(selectedPortfolios);
-			System.out.println(selectedCompanies);
-			
 			//checks if the lists are valid e.i. the lists aren't empty
 			if(selectedPortfolios.isEmpty() || selectedCompanies.isEmpty()){
 				panel.getControlPanel().setErrorMessage(USER_ERROR_MESSAGE);
@@ -155,19 +152,17 @@ public class MainWindow extends JFrame {
 						key.add(t);
 					}
 				}
-				
-				//dispose of the transaction panel
-				dispose();
+
 				
 				//set start report sequence
 				
 				//display successful transactions
 				AbsTransactionReport successfulTrans = new SuccessfulTransactionReport(mLog);
-				
 				Timer t = new Timer(); 
 				
 				t.schedule(new ReportTask(successfulTrans),3000);
 				
+				dispose();		//dispose of the transaction panel
 				
 				/* 			NOTE:					*/
 				/*  add portfolio & company saving code here if you so wish	*/

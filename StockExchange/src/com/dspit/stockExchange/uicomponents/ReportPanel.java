@@ -3,8 +3,10 @@
 package com.dspit.stockExchange.uicomponents;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.Vector;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +33,6 @@ public class ReportPanel extends JPanel {
 	
 // Members ----------------------------------------------------------------- //
 	
-	private JTable mTable;
 	private boolean mIsSuccessful;
 	private String[] mColumns;
 	
@@ -45,19 +46,18 @@ public class ReportPanel extends JPanel {
 	 * reports and <b>false</b> if the panel must display failed reports.
 	 */
 	public ReportPanel(boolean isSuccessful){
-		super(new BorderLayout(PADDING, PADDING));
+		super();
 		
 		mColumns = (mIsSuccessful)? TransactionInterface.SUCCESS_REPORT_COLUMNS
 				: TransactionInterface.FAILED_REPORT_COLUMNS;
 		
 		mIsSuccessful = isSuccessful;
-		mTable = new JTable(0, mColumns.length);
 		
-		DefaultTableModel tModel = new DefaultTableModel();
-		tModel.setColumnIdentifiers(mColumns);
-		mTable.setModel(tModel);
+		this.setLayout(new GridLayout(0, mColumns.length, PADDING, PADDING));
 		
-		this.add(mTable);
+		for(int i = 0; i < mColumns.length; ++i){
+			this.add(new JLabel(mColumns[i]));
+		}
 		
 	}
 	
@@ -131,7 +131,9 @@ public class ReportPanel extends JPanel {
 			}
 		}
 		
-		//append row to the table
-		((DefaultTableModel) mTable.getModel()).addRow(row);
+		for(String v : row){
+			this.add(new JLabel(v));
+		}
+
 	}
 }

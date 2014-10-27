@@ -55,6 +55,7 @@ public abstract class AbsTransactionReport extends JFrame {
 		//finish frame setup
 		this.pack();
 		this.setVisible(true);
+		System.out.println("Test");
 		
 		
 	}

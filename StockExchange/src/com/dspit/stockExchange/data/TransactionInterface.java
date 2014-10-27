@@ -10,12 +10,25 @@ import java.math.BigDecimal;
  * 
  * @author dSpit
  */
-public interface TransactionInterface {	//TODO comment
+public interface TransactionInterface {
 	
 //Constants ---------------------------------------------------------------- //
 	
-	public final static String[] SUCCESS_REPORT_COLUMNS = {/*TODO fill*/};
-	public final static String[] FAILED_REPORT_COLUMNS = {/*TODO fill*/};
+	public final static String[] SUCCESS_REPORT_COLUMNS = {"Transaction Number",
+								"Investor", 
+								"Company", 
+								"Transaction Type", 
+								"Price", 
+								"Quantity",
+								"Total", 
+								"Profit"};
+	public final static String[] FAILED_REPORT_COLUMNS = {"Transaction Number",
+								"Investor", 
+								"Company", 
+								"Transaction Type", 
+								"Price", 
+								"Quantity",
+								"Message",};
 	
 	public final static String BUY_TRANSACTION_NAME = "Buy";
 	public final static String SELL_TRANSACTION_NAME = "Sell";
