@@ -230,9 +230,12 @@ public class TransactionBuilder {
 		}
 		
 		//check the quantity
-		if(shareQuantity == DEFAULT_INT_VALUE){
-			return false;
+		if(mTransType.equals(TransactionInterface.BUY_TRANSACTION_NAME) &&
+				shareQuantity == DEFAULT_INT_VALUE){
+			System.out.println("BUY and is default");
+			return false;			
 		}
+
 		
 		//check the price
 		if(sharePrice == DEFAULT_BIG_DECIMAL_VALUE){
