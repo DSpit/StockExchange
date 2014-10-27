@@ -5,7 +5,6 @@ package com.dspit.stockExchange.uicomponents;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.border.TitledBorder;
 
 import com.dspit.stockExchange.data.Company;
 import com.dspit.stockExchange.data.Portfolio;
@@ -70,8 +70,10 @@ public class TabPanel extends JPanel {
 // Public Methods ---------------------------------------------------------- //
 	
 	/**
+	 * Return the entire panel inputs in a condensed and organized way.
 	 *
-	 * @return
+	 * @return A HashMap of portfolios attached to a list of vectors
+	 * 	which contain the information needed to create a transaction.
 	 */
 	public HashMap<Portfolio, ArrayList<Vector<String>>> getValues() {
 		return mEditPanel.getAllValues();
@@ -96,12 +98,14 @@ public class TabPanel extends JPanel {
 		public SelectorPanel(ArrayList<Portfolio> tabList, EditPanel cardPanel){
 			super();
 			
+			//set layout
 			this.setLayout(new GridLayout(1, tabList.size()));
 			
+			//create logical components 
 			ButtonGroup bGroup = new ButtonGroup();
-			
 			ActionListener tabListener = new TabListener(cardPanel);
 			
+			//iterate through the list of portfolios to create a tab of each
 			for(int i = 0; i < tabList.size(); ++i){
 				Tab b = new Tab(tabList.get(i).getName(), i);	//create new button
 				
@@ -125,13 +129,22 @@ public class TabPanel extends JPanel {
 
 			private EditPanel mEditPanel;
 			
+			/**
+			 * Constructor which assigns the controlled surface to
+			 * the TabListener.
+			 *
+			 * @param cardPanel The Layout assigned to this TabArea.
+			 */
 			public TabListener(EditPanel cardPanel){
 				mEditPanel = cardPanel;
 			}
 			
+			/**
+			 * Changes the controlled surface display to the 
+			 * selected panel.
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				//change the pane which is currently being shown by mEditPanel
 				mEditPanel.showPanel(((Tab) e.getSource()).getIndex());
 				
@@ -150,11 +163,24 @@ public class TabPanel extends JPanel {
 			
 			private int mIndex;
 			
+			/**
+			 * The constructor which assigns the this button
+			 * to the name parameter and sets this Tabs index to
+			 * the given index
+			 *
+			 * @param name The text assigned to the button.
+			 * @param index The index of the Tab.
+			 */
 			public Tab(String name, int index){
 				super(name);
 				mIndex = index;
 			}
 			
+			/**
+			 * Returns the index of the Tab.
+			 *
+			 * @return The Index of the tab.
+			 */
 			public int getIndex(){
 				return mIndex;
 			}
@@ -169,11 +195,19 @@ public class TabPanel extends JPanel {
 	 */
 	private class EditPanel extends JPanel{
 		
+		/**
+		 * The Controlled surface where the user decides what to do.
+		 *
+		 * @param portfolios The list of selected portfolios.
+		 * @param companies The list of selected companies.
+		 */
 		public EditPanel(ArrayList<Portfolio> portfolios, ArrayList<Company> companies){
 			super();
 			
+			//set the layout.
 			this.setLayout(new CardLayout());
 			
+			//Create a panel for each Portfolio
 			for(int i = 0; i < portfolios.size(); ++i){
 				this.add(new OptionPanel(portfolios.get(i), companies), String.valueOf(i));
 			}
@@ -197,16 +231,21 @@ public class TabPanel extends JPanel {
 		public HashMap<Portfolio, ArrayList<Vector<String>>> getAllValues(){
 			HashMap<Portfolio, ArrayList<Vector<String>>> output = new HashMap<Portfolio, ArrayList<Vector<String>>>();
 			
+			//creates a container list for all the portfolio panels
 			Component[] subPanelList = this.getComponents();
 			
+			//iterates through the panels and gets the information
 			for(int i = 0; i < subPanelList.length; ++i){
 				OptionPanel panel = (OptionPanel)subPanelList[i];
 				
+				//gets the transaction information supplied by this panel 
 				ArrayList<Vector<String>> v = panel.getValues();
 				
+				//adds information to the retrieved information
 				output.put(panel.getPortfolio(), v);
 			}
 			
+			//returns this new set of information
 			return output;
 		}
 		
@@ -218,42 +257,72 @@ public class TabPanel extends JPanel {
 		private class OptionPanel extends JPanel{
 			
 			private Portfolio mPortfolio;
-			
 			private ArrayList<SelectorPanel> mCompanyPanels;
 			
+			/**
+			 * Creates a panel so the user can edit the wanted portfolios
+			 * with the wanted companies.
+			 *
+			 * @param p The portfolios associated with this panel.
+			 * @param companies The companies which the user wants to edit
+			 */
 			public OptionPanel(Portfolio p, ArrayList<Company> companies){
 				super();
 				
+				//Initializes the members
 				mPortfolio = p;
 				mCompanyPanels = new ArrayList<SelectorPanel>(companies.size());
 				
+				//set the look of the panel
 				this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 				this.setBorder(BorderFactory.createTitledBorder(p.getName()));
 				
+				//Adds each company as a panel Main panel
 				for(Company c : companies){
-					SelectorPanel sPanel = new SelectorPanel(c);
+					SelectorPanel sPanel = new SelectorPanel(c);	//creates a panel for the company
 					
+					//adds the panel to the logical and the graphic UI
 					mCompanyPanels.add(sPanel);
 					this.add(sPanel);
 				}
 				
 			}
 			
+			/**
+			 * Returns the portfolio assigned to this panel.
+			 *
+			 * @return The portfolio of this instance.
+			 */
 			public Portfolio getPortfolio(){
 				return mPortfolio;
 			}
 			
+			/**
+			 * Returns the values set of inputs that are located in 
+			 * this panel.
+			 *
+			 * @return The input values.
+			 */
 			public ArrayList<Vector<String>> getValues(){
+				//return list
 				ArrayList<Vector<String>> list = new ArrayList<Vector<String>>();
 				
+				//iterate through the input surfaces
 				for(SelectorPanel panel : mCompanyPanels){
 					list.add(panel.getInputValues());
 				}
 				
 				
+				//return the values
 				return list;
 			}
 			
+			/**
+			 * The panel where the user selects all the input variables.
+			 * It contains the graphic interfaces for the user
+			 *
+			 * @author David Boivin (Spit)
+			 */
 			private class SelectorPanel extends JPanel{
 				
 				private final String TOGGLE_BUTTON_BUY = "Buy";
@@ -265,9 +334,15 @@ public class TabPanel extends JPanel {
 				private JTextField mQuantity;
 				private JTextField mPrice;
 				
+				/**
+				 * Constructor that builds and initializes all the input interfaces.
+				 *
+				 * @param company The company to make this Panel represent.
+				 */
 				public SelectorPanel(Company company){
 					super();
 					
+					//set up layout
 					this.setLayout(new GridLayout(1, 3));
 					this.setBorder(BorderFactory.createTitledBorder(company.getName()));
 					
@@ -297,27 +372,36 @@ public class TabPanel extends JPanel {
 								TOGGLE_BUTTON_SELL));
 					togglePanel.add(mBuySellToggle);
 					
+					//add input interfaces
 					this.add(togglePanel);
 					this.add(quantityPanel);
 					this.add(pricePanel);
 				}
 				
 				/**
-				 * 
+				 * Return the values of the input interfaces.
 				 *
-				 * @return
+				 * @return The set of values for this interface
 				 */
 				public Vector<String> getInputValues(){
 					Vector<String> v = new Vector<String>();
 					
-					v.add(0, (mBuySellToggle.isSelected()? 
+					v.add(0, ((TitledBorder) this.getBorder()).getTitle());
+					
+					v.add(1, (mBuySellToggle.isSelected()? 
 							TransactionInterface.BUY_TRANSACTION_NAME:
 							TransactionInterface.SELL_TRANSACTION_NAME));	//Buy or Sell
-					v.add(1, ).
+					v.add(2, this.checkValidity());
 					
 					return v;
 				}
 				
+				/**
+				 * Listener for the toggle button. Which will enable or disable the
+				 * quantity field, based on if it is Selling or buying
+				 *
+				 * @author David Boivin (Spit)
+				 */
 				private class ToggleListener implements ActionListener{
 					
 					private JTextField mQuantityInput; 
@@ -339,10 +423,8 @@ public class TabPanel extends JPanel {
 							mQuantityInput.setEnabled(true);
 						}
 					}
-					
 				}
 			}
 		}
 	}
-
 }
