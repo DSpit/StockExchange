@@ -416,7 +416,7 @@ public class TabPanel extends JPanel {
 						builder.setTransactionType( mBuySellToggle.isSelected()?  
 								TransactionInterface.BUY_TRANSACTION_NAME:TransactionInterface.SELL_TRANSACTION_NAME);
 						
-						if(!mBuySellToggle.isEnabled()){
+						if(!mBuySellToggle.iSelected()){
 							builder.setShareQuantity(mQuantity.getText());
 						}
 						
