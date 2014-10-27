@@ -2,14 +2,11 @@
 
 package com.dspit.stockExchange.uicomponents;
 
-import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import com.dspit.stockExchange.Exception.NoSharesException;
 import com.dspit.stockExchange.Exception.PriceOutOfRangeException;
@@ -35,6 +32,7 @@ public class ReportPanel extends JPanel {
 	
 	private boolean mIsSuccessful;
 	private String[] mColumns;
+
 	
 // Constructors ------------------------------------------------------------ //
 	
@@ -48,10 +46,10 @@ public class ReportPanel extends JPanel {
 	public ReportPanel(boolean isSuccessful){
 		super();
 		
+		mIsSuccessful = isSuccessful;
+		
 		mColumns = (mIsSuccessful)? TransactionInterface.SUCCESS_REPORT_COLUMNS
 				: TransactionInterface.FAILED_REPORT_COLUMNS;
-		
-		mIsSuccessful = isSuccessful;
 		
 		this.setLayout(new GridLayout(0, mColumns.length, PADDING, PADDING));
 		

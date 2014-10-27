@@ -160,7 +160,7 @@ public class MainWindow extends JFrame {
 				AbsTransactionReport successfulTrans = new SuccessfulTransactionReport(mLog);
 				Timer t = new Timer(); 
 				
-				t.schedule(new ReportTask(successfulTrans),3000);
+				t.schedule(new ReportTask(successfulTrans),10000);
 				
 				dispose();		//dispose of the transaction panel
 				
@@ -188,7 +188,7 @@ public class MainWindow extends JFrame {
 				 
 				 Timer t = new Timer();
 				 
-				 t.schedule(new CloseTask(failedTrans), 3000);
+				 t.schedule(new CloseTask(failedTrans), 10000);
 				 
 				 this.cancel();
 				 
