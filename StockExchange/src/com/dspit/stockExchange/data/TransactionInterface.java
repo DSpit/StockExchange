@@ -2,6 +2,8 @@
 
 package com.dspit.stockExchange.data;
 
+import java.math.BigDecimal;
+
 
 /**
  * Interface for the general transactions
@@ -17,4 +19,10 @@ public interface TransactionInterface {	//TODO comment
 	
 	public final static String BUY_TRANSACTION_NAME = "Buy";
 	public final static String SELL_TRANSACTION_NAME = "Sell";
+	
+	public final static BigDecimal minSharePrice = new BigDecimal(1.05);
+	public final static BigDecimal maxSharePrice = new BigDecimal(10.05);
+	
+	public final static int minShareTransQuantity = 10;
+	public final static int maxShareTransQuantity = 100;
 }

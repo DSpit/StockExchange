@@ -16,6 +16,10 @@ import com.dspit.stockExchange.Exception.QuantityOutOfRangeException;
  * @author David Boivin (Spit)
  */
 public class SellTransaction extends Transaction {
+	
+	// Fields ------------------------------------------------------------- //
+	
+		protected BigDecimal sharePurchasePrice;
 
 // Constructor ------------------------------------------------------------- //
 	
@@ -47,9 +51,12 @@ public class SellTransaction extends Transaction {
 	 * 
 	 * @see Transaction#getTransType()
 	 */
-	public String getTransType() throws NoSharesException{
+	public String getTransType() throws NoSharesException {
 		// TODO Auto-generated method stub
-		return mTransType;
+		if(shareQuantity == 0)
+			throw new NoSharesException();
+		else
+			return mTransType;
 	}
 
 	/**
@@ -63,9 +70,12 @@ public class SellTransaction extends Transaction {
 	 * @see Transaction#getShareQuantity()
 	 */
 	@Override
-	public int getShareQuantity() throws QuantityOutOfRangeException{
-		// TODO Auto-generated method stub
-		return shareQuantity;
+	public int getShareQuantity() throws QuantityOutOfRangeException 
+	{
+		if(shareQuantity < 10 || shareQuantity > 100)
+			throw new QuantityOutOfRangeException();
+		else
+			return shareQuantity;
 	}
 
 	/**
@@ -79,9 +89,14 @@ public class SellTransaction extends Transaction {
 	 * @see Transaction#getUnitPrice()
 	 */
 	@Override
-	public BigDecimal getUnitPrice() throws PriceOutOfRangeException{
+	public BigDecimal getUnitPrice() throws PriceOutOfRangeException {
+		if(sharePrice.compareTo(minSharePrice) == -1 || 
+				sharePrice.compareTo(maxSharePrice) == 1)
+			throw new PriceOutOfRangeException();
+		
+		else
+			return sharePrice;
 		// TODO Auto-generated method stub
-		return sharePrice;
 	}
 	
 	/** 
@@ -90,10 +105,12 @@ public class SellTransaction extends Transaction {
 	 * @see Transaction#getTotal()
 	 */
 	@Override
-	public int getTotal() {
+	public BigDecimal getTotal() {
 		// TODO Auto-generated method stub
-		return -1;
+		mTotal = sharePrice.multiply(new BigDecimal(shareQuantity));
+		return mTotal;
 	}
+
 	
 	/**
 	 * See {@link Transaction#checkValid()} for more information.
@@ -102,19 +119,35 @@ public class SellTransaction extends Transaction {
 	 */
 	@Override
 	protected boolean checkValid() {
-		// TODO Auto-generated method stub
-		return false;
+		if(shareQuantity < 10 || shareQuantity > 100)
+			return false;
+		else if(sharePrice.compareTo(minSharePrice) == -1 || 
+				sharePrice.compareTo(maxSharePrice) == 1)
+			return false;
+		else
+			return true;
 	}
-
 // Public Methods ---------------------------------------------------------- //
 	
 	/**
 	 * Returns the total profit of this transaction.
 	 *
 	 * @return The profit (+/-) of this transaction. 
+	 * @throws PriceOutOfRangeException 
 	 */
-	public int getProfit(){
-		return -1;
+	public BigDecimal getProfit() throws PriceOutOfRangeException{
+
+		int index = mPortfolio.search(this);
+		
+		if(!(index == -1))
+		{
+			sharePurchasePrice = mPortfolio.mPortfolio.get(index).getUnitPrice();
+			return (sharePurchasePrice.subtract(sharePrice)).multiply(new BigDecimal(shareQuantity));
+		}
+		
+		else
+			return new BigDecimal(0);
+
 	}
 
 }

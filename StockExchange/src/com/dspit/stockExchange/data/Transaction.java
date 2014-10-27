@@ -135,7 +135,7 @@ public abstract class Transaction implements TransactionInterface
 	 * @return The total worth of this transaction
 	 * 	i.e. Total = Quantity * Unit Price
 	 */
-	public abstract int getTotal();
+	public abstract BigDecimal getTotal();
 	
 	/**
 	 * This method checks if the price is considered valid and
