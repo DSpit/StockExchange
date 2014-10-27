@@ -62,7 +62,7 @@ public abstract class Transaction implements TransactionInterface
 	 * 	<b>false</b> otherwise.
 	 */
 	public boolean isValid(){
-		return false;	//TODO
+		return this.checkValid();
 	}
 	
 	/**
@@ -94,7 +94,7 @@ public abstract class Transaction implements TransactionInterface
 	 * 	transaction
 	 */
 	public String getCompanyName(){
-		return ""; //TODO
+		return mCompany.getName();
 	}
 	
 // Abstract Methods -------------------------------------------------------- //

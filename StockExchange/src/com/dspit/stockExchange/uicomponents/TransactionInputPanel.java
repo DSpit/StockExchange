@@ -5,7 +5,6 @@ package com.dspit.stockExchange.uicomponents;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -13,6 +12,7 @@ import javax.swing.JPanel;
 import com.dspit.stockExchange.data.Company;
 import com.dspit.stockExchange.data.Portfolio;
 import com.dspit.stockExchange.data.Transaction;
+import com.dspit.stockExchange.data.TransactionBuilder;
 
 /**
  * This panel is where the user will decide what each portfolio
@@ -59,7 +59,7 @@ public class TransactionInputPanel extends JPanel {
 	
 // Public Methods ---------------------------------------------------------- //
 	
-	public HashMap<Portfolio, ArrayList<Vector<String>>> getInputValues(){
+	public HashMap<Portfolio, ArrayList<TransactionBuilder>> getInputValues(){
 		return mTPanel.getValues();
 	}
 

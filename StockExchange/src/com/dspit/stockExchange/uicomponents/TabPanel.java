@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,10 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.border.TitledBorder;
 
 import com.dspit.stockExchange.data.Company;
 import com.dspit.stockExchange.data.Portfolio;
+import com.dspit.stockExchange.data.TransactionBuilder;
 import com.dspit.stockExchange.data.TransactionInterface;
 
 /**
@@ -75,7 +74,7 @@ public class TabPanel extends JPanel {
 	 * @return A HashMap of portfolios attached to a list of vectors
 	 * 	which contain the information needed to create a transaction.
 	 */
-	public HashMap<Portfolio, ArrayList<Vector<String>>> getValues() {
+	public HashMap<Portfolio, ArrayList<TransactionBuilder>> getValues() {
 		return mEditPanel.getAllValues();
 	}
 	
@@ -228,8 +227,8 @@ public class TabPanel extends JPanel {
 		 *
 		 * @return The values the user has entered.
 		 */
-		public HashMap<Portfolio, ArrayList<Vector<String>>> getAllValues(){
-			HashMap<Portfolio, ArrayList<Vector<String>>> output = new HashMap<Portfolio, ArrayList<Vector<String>>>();
+		public HashMap<Portfolio, ArrayList<TransactionBuilder>> getAllValues(){
+			HashMap<Portfolio, ArrayList<TransactionBuilder>> output = new HashMap<Portfolio, ArrayList<TransactionBuilder>>();
 			
 			//creates a container list for all the portfolio panels
 			Component[] subPanelList = this.getComponents();
@@ -239,7 +238,7 @@ public class TabPanel extends JPanel {
 				OptionPanel panel = (OptionPanel)subPanelList[i];
 				
 				//gets the transaction information supplied by this panel 
-				ArrayList<Vector<String>> v = panel.getValues();
+				ArrayList<TransactionBuilder> v = panel.getValues();
 				
 				//adds information to the retrieved information
 				output.put(panel.getPortfolio(), v);
@@ -303,13 +302,18 @@ public class TabPanel extends JPanel {
 			 *
 			 * @return The input values.
 			 */
-			public ArrayList<Vector<String>> getValues(){
+			public ArrayList<TransactionBuilder> getValues(){
 				//return list
-				ArrayList<Vector<String>> list = new ArrayList<Vector<String>>();
+				ArrayList<TransactionBuilder> list = new ArrayList<TransactionBuilder>();
 				
 				//iterate through the input surfaces
 				for(SelectorPanel panel : mCompanyPanels){
-					list.add(panel.getInputValues());
+					TransactionBuilder builder = new TransactionBuilder();
+					builder.setPortrfolio(mPortfolio);
+					
+					panel.getInputValues(builder);
+					
+					list.add(builder);
 				}
 				
 				
@@ -330,6 +334,7 @@ public class TabPanel extends JPanel {
 				private final String QUANTITY_INPUT_LABEL = "Quantity: ";
 				private final String PRICE_INPUT_LABEL = "Price: ";
 				
+				private Company mCompany;
 				private JToggleButton mBuySellToggle;
 				private JTextField mQuantity;
 				private JTextField mPrice;
@@ -345,6 +350,8 @@ public class TabPanel extends JPanel {
 					//set up layout
 					this.setLayout(new GridLayout(1, 3));
 					this.setBorder(BorderFactory.createTitledBorder(company.getName()));
+					
+					mCompany = company;
 					
 					//QuantitlyPanel
 					JPanel quantityPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -382,18 +389,22 @@ public class TabPanel extends JPanel {
 				 * Return the values of the input interfaces.
 				 *
 				 * @return The set of values for this interface
+				 * 
+				 * @throws IllegalArgumentException If the value in the input interfaces are not valid.
 				 */
-				public Vector<String> getInputValues(){
-					Vector<String> v = new Vector<String>();
+				public void getInputValues(TransactionBuilder builder) throws IllegalArgumentException{
 					
-					v.add(0, ((TitledBorder) this.getBorder()).getTitle());
-					
-					v.add(1, (mBuySellToggle.isSelected()? 
-							TransactionInterface.BUY_TRANSACTION_NAME:
-							TransactionInterface.SELL_TRANSACTION_NAME));	//Buy or Sell
-					v.add(2, this.checkValidity());
-					
-					return v;
+					try{
+						builder.setCompany(mCompany);
+						builder.setTransactionType( mBuySellToggle.isEnabled()? 
+								TransactionInterface.SELL_TRANSACTION_NAME: 
+								TransactionInterface.BUY_TRANSACTION_NAME);
+						builder.setShareQuantity(mQuantity.getText());
+						builder.setSharePrice(mPrice.getText());
+						
+					}catch(IllegalArgumentException e){
+						throw new IllegalArgumentException("Error with: " + mCompany.getName());
+					}
 				}
 				
 				/**

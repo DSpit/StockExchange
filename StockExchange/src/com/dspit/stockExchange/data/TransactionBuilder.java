@@ -99,15 +99,18 @@ public class TransactionBuilder {
 	 *
 	 * @param transactionType The Type of pending transaction.
 	 * 
+	 * @return itself, which allows for chaining.
+	 * 
 	 * @throws IllegalArgumentException is thrown if the transaction type
 	 * 	is not either {@link TransactionInterface#BUY_TRANSACTION_NAME} or 
 	 * 	{@link TransactionInterface#SELL_TRANSACTION_NAME}.
 	 */
-	public void setTransactionType(String transactionType) throws IllegalArgumentException{
+	public TransactionBuilder setTransactionType(String transactionType) throws IllegalArgumentException{
 		
 		if(transactionType.equals(TransactionInterface.BUY_TRANSACTION_NAME) ||
 				transactionType.equals(TransactionInterface.SELL_TRANSACTION_NAME)){
 			mTransType = transactionType;
+			return this;
 			
 		}else{
 			throw new IllegalArgumentException();
@@ -116,20 +119,26 @@ public class TransactionBuilder {
 	
 	/**
 	 * Sets the portfolio to to the pending transaction
+	 * 
+	 * @return itself, which allows for chaining.
 	 *
 	 * @param portfolio The portfolio associated with this pending transaction.
 	 */
-	public void setPortrfolio(Portfolio portfolio){
+	public TransactionBuilder setPortrfolio(Portfolio portfolio){
 		mPortfolio = portfolio;
+		return this;
 	}
 	
 	/**
 	 * Sets the company to the pending transaction.
 	 *
+	 * @return itself, which allows for chaining.
+	 * 
 	 * @param company The company associated with this pending transaction.
 	 */
-	public void setCompany(Company company){
+	public TransactionBuilder setCompany(Company company){
 		mCompany = company;
+		return this;
 	}
 	
 	/**
@@ -137,13 +146,16 @@ public class TransactionBuilder {
 	 *
 	 * @param quantity The quantity of shares assicatiated with this pending transactions.
 	 * 
+	 * @return itself, which allows for chaining.
+	 * 
 	 * @throws IllegalArgumentException If the string from of the quantity of shares
 	 * cannot be parsed into a proper integer.
 	 */
-	public void setShareQuantity(String quantity) throws IllegalArgumentException{
+	public TransactionBuilder setShareQuantity(String quantity) throws IllegalArgumentException{
 		
 		try{
 			shareQuantity = Integer.parseInt(quantity);
+			return this;
 			
 		}catch(NumberFormatException e){
 			throw new IllegalArgumentException();
@@ -155,12 +167,16 @@ public class TransactionBuilder {
 	 *
 	 * @param price The price for each share associated to this transaction.
 	 * 
+	 * @return itself, which allows for chaining.
+	 * 
 	 * @throws IllegalArgumentException if the String form of the price cannot be parsed
 	 * 	into a double and then assigned to a BigDecimal. 
 	 */
-	public void setSharePrice(String price) throws IllegalArgumentException{
+	public TransactionBuilder setSharePrice(String price) throws IllegalArgumentException{
 		try{
 			sharePrice = new BigDecimal(Double.parseDouble(price));
+			return this;
+			
 		}catch(Exception e){
 			throw new IllegalArgumentException();
 		}

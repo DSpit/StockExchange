@@ -95,25 +95,46 @@ final public class Portfolio
 		return false;
 	}
 	
+//	/**
+//	 * Method that searches if a portfolio contains company stocks pertaining to the particular
+//	 * SellTransaction. Returns index of transaction if found and -1 if not found.
+//	 * 
+//	 * @param sTrans : The SellTransaction argument
+//	 * @return : index of Transaction object in portfolio or -1 if none is found
+//	 */
+//	protected int search(SellTransaction sTrans)
+//	{
+//		for(int i = 0; i < mPortfolio.size(); i++)
+//		{
+//			if((mPortfolio.get(i).mCompany.getCompanyId() == sTrans.mCompany.getCompanyId())
+//					&& (mPortfolio.get(i) instanceof BuyTransaction))
+//			{
+//				return i;
+//			}
+//		}
+//		return -1;
+//	}
+	
 	/**
-	 * Method that searches if a portfolio contains company stocks pertaining to the particular
-	 * SellTransaction. Returns index of transaction if found and -1 if not found.
+	 * Method that gets the total cost of all the shares owned by this portfolio
+	 * of a particular company.
 	 * 
-	 * @param sTrans : The SellTransaction argument
-	 * @return : index of Transaction object in portfolio or -1 if none is found
+	 * @param company The company to search up shares for. 
+	 * 
+	 * @return The total cost of all the shares of one company or -1 if none is found
 	 */
-	protected int search(SellTransaction sTrans)
-	{
-		for(int i = 0; i < mPortfolio.size(); i++)
-		{
-			if((mPortfolio.get(i).mCompany.getCompanyId() == sTrans.mCompany.getCompanyId())
-					&& (mPortfolio.get(i) instanceof BuyTransaction))
-			{
-				return i;
+	public BigDecimal getTotalCost(Company company){
+		BigDecimal total = new BigDecimal(0);
+		
+		for(Transaction t : mPortfolio){
+			if(t.isValid() && t.getCompanyName().equals(company.getName())){
+				total.add(t.getTotal());
 			}
 		}
-		return -1;
+		
+		return total;
 	}
+	
 
 	/**
 	 * Returns portfolio name

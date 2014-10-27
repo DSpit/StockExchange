@@ -123,7 +123,11 @@ public class ReportPanel extends JPanel {
 					TransactionInterface.BUY_TRANSACTION_NAME){
 				row.add(7, BLANK);
 			}else{
-				row.add(7, String.valueOf(((SellTransaction) trans).getProfit()));
+				try{
+					row.add(7, String.valueOf(((SellTransaction) trans).getProfit()));
+				}catch(NoSharesException e){
+					System.out.println("Should Never Get HEre");
+				}
 			}
 		}
 		
