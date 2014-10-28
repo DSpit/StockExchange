@@ -1,6 +1,7 @@
 package com.dspit.stockExchange.uicomponents;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class MainWindow extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setLayout(new BorderLayout(PADDING, PADDING));
+		this.setPreferredSize(new Dimension(300, 400));
 		
 		//initializes the members of this class
 		mLog = log;
